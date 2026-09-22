@@ -70,7 +70,7 @@ def view():
 
     return data
 
-def save_data():
+def save_data(data):
     with open ('patients.json', 'w') as f:
         json.dump(data, f)
 
@@ -149,4 +149,16 @@ def update_patient(patient_id: str, patient_update: PatientUpdate):
     #save data
     save_data(data)
 
-    return JSONResponse(status_code=200, content={'message': 'Patient'})
+    return JSONResponse(status_code=200, content={'message': 'Patient updated successfully'})
+
+@app.delete('/delete/{patient_id}')
+def delete_patient(patient_id: str):
+
+    #load_data
+    data=load_data()
+
+    if patient_id not in data:
+        raise HTTPException(status_code=404, detail='patient not found')
+    del data[patient_id]
+    save_data(data)
+    return JSONResponse(status_code=200, content={'message':'patient deleted successfully'})
