@@ -70,6 +70,11 @@ def view():
 
     return data
 
+@app.get('/count')
+def count_patients():
+    data = load_data()
+    return {'count': len(data)}
+
 def save_data(data):
     with open ('patients.json', 'w') as f:
         json.dump(data, f)
