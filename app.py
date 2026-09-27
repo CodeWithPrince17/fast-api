@@ -7,6 +7,7 @@ import pandas as pd
 
 # import ml model
 with open ('model.pkl', 'rb') as f:
+    
     model= pickle.load(f)
 
 app = FastAPI()
@@ -83,4 +84,4 @@ def predict_premium(data: UserInput):
 
     prediction= model.predict(input_df)[0]
 
-    return JSONResponse(status_code=200, content={'predicted category':prediction})
+    return JSONResponse(status_code=200, content={'predicted_category':prediction})
